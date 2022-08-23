@@ -140,7 +140,3 @@ class Game():
         
 
 
-
-
-new_board = Game()
-new_board.run()
