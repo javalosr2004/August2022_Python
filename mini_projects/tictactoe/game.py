@@ -32,8 +32,6 @@ class Game():
                 return i
         return ''
 
-    print('\n')
-    print('Tic-Tac-Toe Game: \n\n' + '-'*45 + '\n')
 
 
     #makes the grid for tic-tac-toe
@@ -47,13 +45,12 @@ class Game():
             index = [self.letters_num[letter], 3]
             print(self.return_value(index).center(5), end = '')
             print('\n')
-        print('')
 
     #logic
     def add_grid(self, id: str, input):
         try:
-            letter, number = str(input[0]), int(input[1])
-            self.values_available.remove(input)
+            letter, number = str(input[0]).upper(), int(input[1])
+            self.values_available.remove(letter + str(number))
             self.globalDict[id][letter].append(number)
             return True
         except Exception:
@@ -90,15 +87,20 @@ class Game():
 
     def game_logic(self):
         win_dict = {'O': [], 'X': []}
-        for id, v in self.globalDict.items():
-            spanning_true = self.span_board(v) #will return true of cross row or vertical row condiiton is met
-            for item, value in v.items():
-                straight_row = all(x in value for x in [1, 2, 3])
-                if straight_row:
-                    break
-                
-            if spanning_true or straight_row:
-                self.game_win(id)
+        try:
+            for id, v in self.globalDict.items():
+                spanning_true = self.span_board(v) #will return true of cross row or vertical row condiiton is met
+                for item, value in v.items():
+                    straight_row = all(x in value for x in [1, 2, 3])
+                    if straight_row:
+                        break
+                    
+                if spanning_true or straight_row:
+                    self.game_win(id)
+        except:
+            print('You tied.')
+            self.score['Tie'] +=1
+            self.gameRun = False
 
 
     def moves(self):
@@ -116,6 +118,7 @@ class Game():
         self.values_available = [f'{alpha}{num}' for num in range(1, 4) for alpha in ascii_uppercase[:3]]
 
     def run(self):
+        print('\nTic-Tac-Toe Game: \n\n' + '-'*45 + '\n')
         while self.gameStart:
             start = pyip.inputYesNo('Start new game: ')
             if start == 'yes':
