@@ -9,11 +9,6 @@ user_id = 'X'
 bot_id = 'O'
 
 
-
-
-
-
-
 class Game():
     def __init__(self):
         self.user_id = 'X'
