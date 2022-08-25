@@ -1,5 +1,4 @@
 from concurrent.futures import thread
-from re import X
 import threading, time
 
 x = 8192
